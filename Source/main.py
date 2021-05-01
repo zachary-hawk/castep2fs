@@ -7,8 +7,8 @@ import time
 import argparse
 from colorsys import rgb_to_hsv, hsv_to_rgb
 import ase.io as io
-import BZ
-import bands
+from Source import BZ
+from Source import bands
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.pyplot as plt
 from ase.spacegroup import Spacegroup
