@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup,Extension
 
 setup(name="castep2fs",
-      version="1.0.0",
+      version="1.0.1",
       packages=find_packages(),
       description="CASTEP utility for calculating Fermi surfaces and related properties.",
       url="https://github.com/zachary-hawk/castep2fs.git",
