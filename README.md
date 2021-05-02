@@ -12,7 +12,8 @@ Usage
 -----
 
 castep2fs reads castep input and output files.
-```input : <seed>.cell
+```
+input : <seed>.cell
 output: <seed>.bands
         <seed>-out.cell (optional but improves performance)
 
