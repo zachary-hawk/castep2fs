@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: castep2fs
+Version: 1.0.0
+Summary: CASTEP utility for calculating Fermi surfaces and reelated properties.
+Home-page: https://github.com/zachary-hawk/castep2fs.git
+Author: Zachary Hawkhead
+Author-email: zachary.hawkhead@durham.ac.uk
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
