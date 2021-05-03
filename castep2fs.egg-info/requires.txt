@@ -1,7 +1,7 @@
 numpy
 matplotlib
 scipy
-ase
+ase>=3.18.1
 pyvista
 vtk
 spglib
