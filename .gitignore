@@ -5,3 +5,4 @@ venv/
 build/
 dist/
 setup.py
+castep2fs.egg-info

@@ -563,12 +563,11 @@ def main():
         p.window_size=[5000,5000]
         p.show(title=seed,screenshot=seed+"_BZ.png")
     else:
-        p.show(title=seed)
+        p.show(title=seed,auto_close=False)
         
     if verbose:
         print("Final Camera Position:")
         print(p.camera_position[0][0],p.camera_position[0][1],p.camera_position[0][2],p.camera_position[2][0],p.camera_position[2][1],p.camera_position[2][2])
-    
     
     
         

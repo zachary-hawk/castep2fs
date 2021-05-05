@@ -1,0 +1,5 @@
+task : spectral
+spectral_task :dos
+spin_polarised : False
+xc_functional : PBE
+

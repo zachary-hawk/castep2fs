@@ -1,0 +1,6 @@
+task : spectral
+spectral_task: DOS
+
+xc_functional : LDA
+spin_polarised : T
+write_cell_structure : T

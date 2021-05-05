@@ -21,3 +21,8 @@ output: <seed>.bands
 
 castep2fs <seed>
 ```
+
+For help run:
+```
+castep2fs -h
+```
