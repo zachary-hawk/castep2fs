@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: Hawkhead
+  given-names: Zachary
+orcid: https://orcid.org/0000-0001-6263-5237
+title: "castep2fs: A CASTEP tool for calculating Fedrmi surfaces"
+version: 1.0.0
+date-released: 2022-5-4
+url: https://github.com/zachary-hawk/castep2fs/
