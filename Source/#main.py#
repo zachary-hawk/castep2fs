@@ -67,7 +67,6 @@ def main():
     parser.add_argument('--super',help='Display a supercell of the primitive Brillouin zone',type=int, nargs=3)
     parser.add_argument('--path',help='Visualise a path in a BZ',nargs="*")
     parser.add_argument('--orient',choices=['kx','ky','kz'],default=None)
-    parser.add_argument('--spin',help='Colour the surfaces by the spin-channel (red=up, blue=down)',action='store_true')
     args = parser.parse_args()
     seed=args.seed
     save=args.save
@@ -103,7 +102,7 @@ def main():
     c, s = np.cos(theta), np.sin(theta)
     R_corr = np.array(((c, -s, 0), (s, c, 0),(0,0,1)))
     orient=args.orient
-    color_spin=args.spin
+    
     slice=args.slice
     if slice!=None:
         plot_slice=True
@@ -203,7 +202,7 @@ def main():
     
     
     line_color="black"
-    face_op=0.5#opacity[0]
+    face_op=opacity[0]
     if opacity==1:
         opacity=[1]
     if background=="default" or background =="night" or background=="ParaView":
@@ -390,10 +389,10 @@ def main():
     
     #light = pv.Light()
     #light.set_direction_angle(30, 0)
-    specular_power=30
+    specular_power=3000
     specular=2
     ambient=0.3
-    diffuse=00.55
+    diffuse=1.0
     
 
     # Run the pdos if needed
@@ -444,7 +443,7 @@ def main():
     if prim:
         for i in range(0,12):
             if not save:
-                p.add_lines(edges[i],width=1.5,color=line_color)
+                p.add_lines(edges[i],width=1.5,colorl=line_color)
             else:
                 p.add_lines(edges[i],width=2.5,color=line_color)
     
@@ -480,7 +479,7 @@ def main():
     # Add recip lattice vecs
     #axis_lab=np.array(["$k_x$","$k_y$","$k_z$"])
     #print("test")
-    axis_lab=np.array([r"k$_{1}$","k2","k3"])
+    axis_lab=np.array(["Kx","Ky","Kz"])
     min_k=np.max(np.linalg.norm(recip_latt,axis=1))
     if show_axes:
         for i in range(0,3):
@@ -626,7 +625,6 @@ def main():
             nspins=[1]
         elif show=='up':
             nspins=[0]
-            
         #If degenerate energies dont plot down spins, slow and not worth it!
         if bs.degen:
             nspins=[0]
@@ -720,13 +718,12 @@ def main():
             
         interp = cloud.delaunay_3d(alpha=100,progress_bar=verbose)
         total_vol=interp.volume
-
+            
         for spin in nspins:
 
-            #Extract all the right stuf
+            #Extract all the right stuff
 
-
-            
+                
             # get the indices to plot
             if n_surf!=None:
                 n_surf=np.array(n_surf,dtype=int)
@@ -736,15 +733,6 @@ def main():
             for band in range(0,n_fermi[spin]):
                 
                 c=next(colours)
-
-                #Change the colors
-                if color_spin:
-                    if spin==0:
-                        c=[1.,0.,0.,1.]
-                    elif spin==1:
-                        c=[0.,0.,1.,1.]
-
-
                 op=next(opacity)
                 if band in n_surf:
 

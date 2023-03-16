@@ -3,7 +3,7 @@ import sys
 
 class BandStructure:
     '''Class containing bands information for calculating fermi surfaces'''
-    def __init__(self,seed,recip_cell,cell,vert,sym,prim,supercell,offset):
+    def __init__(self,seed,recip_cell,cell,vert,sym,prim,offset):
         
         # Calculate the plane info
         planes=np.zeros((len(vert),3))
@@ -92,7 +92,7 @@ class BandStructure:
                 #kpoints[i+no_kpoints]=-temp_kpts_array
 
         kpoints=np.array(kpoints)
-
+        np.savetxt("Cu.kpt",kpoints)
         
         unfold_kpoints=[]#np.zeros((2*no_kpoints,3))  
         kpoint_map=[]
@@ -140,6 +140,7 @@ class BandStructure:
                         unfold_kpoints=np.append(unfold_kpoints,T,axis=0)
                         kpoint_map=np.append(kpoint_map,map_copy)
             
+        
         # Start masking
         # Find the unique ones
         unfold_kpoints=np.round(unfold_kpoints,4)
@@ -152,7 +153,7 @@ class BandStructure:
         
         # Distance of the points from Gamma
         r=np.sqrt(np.sum(unfold_kpoints**2,axis=1))
-        mask=(r<2*np.max(k_len)/2)
+        mask=(r<2*np.max(k_len)/3)
         
         # Gets rid of anything too far away
         if not prim:
@@ -200,10 +201,6 @@ class BandStructure:
         # Extract the energy for each kpoint
 
         if not spin_polarised:
-
-            nspins=1
-            self.nspins=nspins
-            
             energy_array=np.zeros((no_eigen,no_kpoints))
             fermi_map=np.zeros((no_eigen),dtype=bool)
             electron_ids=[]
@@ -220,8 +217,7 @@ class BandStructure:
             energy_array=energy_array[fermi_map]
             #print("Number of Fermi surfaces: ",len(energy_array))
             n_fermi=len(energy_array)
-
-            self.n_fermi=np.array([n_fermi])
+            self.n_fermi=n_fermi
 
 
             #Transpose the energy array to make it kpoint oriented
@@ -231,21 +227,13 @@ class BandStructure:
             for i in range(nkpts_unfolded):
                 unfolded_energy_up[i]=energy_array[kpoint_map[i]]
 
-            energy=np.zeros((n_fermi,unfolded_energy_up.shape[0],nspins))
-            energy[0:n_fermi,:,0]=unfolded_energy_up.T*eV
+            self.energy_up=unfolded_energy_up*eV
+            self.energy_down=None
+            self.up_ids=electron_ids
 
-            self.energy=energy
 
-            ids=np.zeros((len(electron_ids),nspins),dtype=int)
-            ids[0:n_fermi,0]=electron_ids
-            self.ids=ids
-
-            self.degen=True
             
         else:
-            nspins=2
-            self.nspins=nspins
-            
             energy_array=np.zeros((no_eigen,no_kpoints))
             energy_array_do=np.zeros((no_eigen_2,no_kpoints))
             fermi_map=np.zeros((no_eigen),dtype=bool)
@@ -277,13 +265,12 @@ class BandStructure:
             
             n_fermi_down=len(energy_array_do)
 
-            
-            self.n_fermi=np.array([n_fermi_up,n_fermi_down])
-            ids=np.zeros((np.max(self.n_fermi),nspins),dtype=int)
-            ids[0:n_fermi_up,0]=up_ids
-            ids[0:n_fermi_down,1]=down_ids
-            self.ids=ids
 
+            self.n_fermi_up=n_fermi_up
+            self.n_fermi_down=n_fermi_down
+            self.n_fermi=None
+            self.up_ids=up_ids
+            self.down_ids=down_ids
             #Transpose the energy array to make it kpoint oriented
             energy_array=energy_array.T
             energy_array_do=energy_array_do.T
@@ -296,29 +283,10 @@ class BandStructure:
                 unfolded_energy_up[i]=energy_array[kpoint_map[i]]
                 unfolded_energy_down[i]=energy_array_do[kpoint_map[i]]
 
-            energy=np.zeros((np.max(self.n_fermi),unfolded_energy_up.shape[0],nspins))     # band,kpoint,spin
 
-            energy[0:n_fermi_up,:,0]=unfolded_energy_up.T*eV
-            energy[0:n_fermi_down,:,1]=unfolded_energy_down.T*eV
-
-            self.degen=False
-            if n_fermi_up==n_fermi_down:
-                for band in range(n_fermi_up):
-                    band_diff=np.max(energy[0:n_fermi_up,band,0]-energy[0:n_fermi_down,band,1])
-                    if band_diff<1E-4:
-                        # if definitely degen so dont plot both... speed and aesthetics! 
-                        self.degen=True
-                    else:
-                        self.degen=False
-                        break
-                    
-                        
             self.energy_up=unfolded_energy_up*eV
             self.energy_down=unfolded_energy_down*eV
-            self.energy=energy
-
-            self.n_fermi_up=n_fermi_up
-            self.n_fermi_down=n_fermi_down
+            
 
         self.kpoints=unfold_kpoints
         self.kpoint_map=kpoint_map

@@ -25,6 +25,7 @@ class BZ:
         edges=[]
         vert=[]
         for face in vertices:
+
             lface=face[0]
             for j in range(1,len(lface)):
                 edge=[lface[j],lface[j-1]]
@@ -64,7 +65,7 @@ class BZ:
                 if i==j:
                     continue
                 bz_path.append([scaled_points[i],scaled_points[j]])
-        
+
         self.bz_points=scaled_points
         self.bz_labels=special_point_names
         self.bz_path=np.array(bz_path)
