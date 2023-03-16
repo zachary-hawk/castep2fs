@@ -26,3 +26,10 @@ For help run:
 ```
 castep2fs -h
 ```
+
+Installation
+------------
+
+```
+pip install git+https://github.com/zachary-hawk/castep2fs.git
+```
