@@ -480,7 +480,7 @@ def main():
     # Add recip lattice vecs
     #axis_lab=np.array(["$k_x$","$k_y$","$k_z$"])
     #print("test")
-    axis_lab=np.array([r"k$_{1}$","k2","k3"])
+    axis_lab=np.array([r"k1","k2","k3"])
     min_k=np.max(np.linalg.norm(recip_latt,axis=1))
     if show_axes:
         for i in range(0,3):
