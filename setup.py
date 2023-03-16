@@ -13,7 +13,7 @@ setup(name="castep2fs",
                         "matplotlib",
                         "scipy",
                         "ase>=3.18.1",
-                        "pyvista",
+                        "pyvista==0.37.0",
                         "vtk","spglib","argparse","tqdm"],
 
       entry_points={"console_scripts":["castep2fs=Source.main:main",]
