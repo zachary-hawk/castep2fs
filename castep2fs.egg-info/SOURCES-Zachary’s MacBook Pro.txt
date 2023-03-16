@@ -1,0 +1,12 @@
+README.md
+setup.py
+Source/BZ.py
+Source/__init__.py
+Source/bands.py
+Source/main.py
+castep2fs.egg-info/PKG-INFO
+castep2fs.egg-info/SOURCES.txt
+castep2fs.egg-info/dependency_links.txt
+castep2fs.egg-info/entry_points.txt
+castep2fs.egg-info/requires.txt
+castep2fs.egg-info/top_level.txt

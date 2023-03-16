@@ -1,0 +1,3 @@
+[console_scripts]
+castep2fs = Source.main:main
+

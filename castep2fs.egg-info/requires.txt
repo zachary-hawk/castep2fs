@@ -1,0 +1,9 @@
+numpy
+matplotlib
+scipy
+ase>=3.18.1
+pyvista
+vtk
+spglib
+argparse
+tqdm
